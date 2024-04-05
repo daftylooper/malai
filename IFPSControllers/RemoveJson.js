@@ -1,7 +1,7 @@
 const axios = require('axios');
 require('dotenv').config();
 
-async function RemoveJson(cid) {
+async function RemoveJsonFromIPFS(cid) {
     try {
         const url = `https://api.pinata.cloud/pinning/unpin/${cid}`
         console.log("URL: ", url)

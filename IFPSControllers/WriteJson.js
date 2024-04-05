@@ -1,69 +1,25 @@
-const axios = require('axios');
-const FormData = require('form-data');
-const fs = require('fs');
-require('dotenv').config();
+async function WriteJsonToIPFS(writeObject) {
+  try {
+    const blob = new Blob([JSON.stringify(writeObject)], { type: "application/json" });
+    const data = new FormData();
+    data.append("file", blob);
 
-function FileWrite(stuff) {
-
-  fs.unlinkSync("temp")
-
-  const writeStream = fs.createWriteStream("temp")
-
-  writeStream.on('open', () => {
-    console.log('Stream opened');
-  });
-  writeStream.on('error', (err) => {
-      console.error('Error writing to stream:', err);
-  });
-  writeStream.on('finish', () => {
-      console.log('Write stream finished writing');
-  });
-
-  writeStream.write(JSON.stringify(stuff));  
-  writeStream.end()
-
-  setTimeout(()=>{console.log("Closing Write Stream")}, 1000)
-
-}
-
-// I know i'm needlessely deleteing, creating, writing, closing and reading from the file when i can create a blob and passs into the FormData
-// But just won't bloody work. This is a bad fixaround, that just... works.
-
-function WriteJsonToIPFS(postData) {
-
-  FileWrite(postData)
-
-  const formData = new FormData();
-  const file = fs.createReadStream("temp")
-  formData.append('file', file)
-  const pinataMetadata = JSON.stringify({
-    name: 'daftylooper',
-  });
-  formData.append('pinataMetadata', pinataMetadata);
-  const pinataOptions = JSON.stringify({
-    cidVersion: 0,
-  })
-  formData.append('pinataOptions', pinataOptions);
-
-  console.log(formData)
-
-  try{
-    axios.post("https://api.pinata.cloud/pinning/pinFileToIPFS", formData, {
-      maxBodyLength: "Infinity",
-      headers: {
-        'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
-        'Authorization': `Bearer ${process.env.PINATA_JWT}`
+    const res = await fetch("https://api.pinata.cloud/pinning/pinFileToIPFS",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${process.env.PINATA_JWT}`,
+        },
+        body: data,
       }
-    })
-    .then(res=>{
-      console.log(res)
-    })
-    .catch(e=>{
-      console.log(e)
-    })
+    );
+    const resData = await res.json();
+    console.log(resData);
+    return resData.IpfsHash;
+
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 module.exports = WriteJsonToIPFS

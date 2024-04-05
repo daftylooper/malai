@@ -19,10 +19,10 @@ async function RemoveJsonFromIPFS(cid) {
         // deletedPins++;
         // process.stdout.write(`Deleted ${deletedPins} of ${totalPins} pins\r`);
       } catch (error) {
-        console.log(error);
+        //console.log(error);
       }
     // const response = await axios.delete(`https://api.pinata.cloud/pinning/unpin/${cid}`, {headers: {Authorization: process.env.PINATA_JWT}})
     // print(response)
 }
 
-module.exports = RemoveJson
+module.exports = RemoveJsonFromIPFS

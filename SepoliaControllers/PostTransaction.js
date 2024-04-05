@@ -1,4 +1,4 @@
-function SendTransaction(web3, sender, receiver, private_key, value, gas, data) {
+function PostTransaction(web3, sender, receiver, private_key, value, gas, data) {
     //Unlock account if needed (only necessary if sending transaction from a specific account)
     const account = sender
     const privateKey = private_key
@@ -40,4 +40,4 @@ function SendTransaction(web3, sender, receiver, private_key, value, gas, data) 
     });
 }
 
-module.exports = SendTransaction
+module.exports = PostTransaction

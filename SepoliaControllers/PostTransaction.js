@@ -5,8 +5,6 @@ function PostTransaction(web3, sender, receiver, private_key, value, gas, data) 
     web3.eth.accounts.wallet.add(privateKey); // Add the account to web3 wallet
     web3.eth.defaultAccount = account; // Set the default account
 
-    console.log("---> DebuG: A")
-
     const dataObject = JSON.stringify(data);
     const encodedData = web3.eth.abi.encodeParameter('string', dataObject);
 
@@ -21,21 +19,16 @@ function PostTransaction(web3, sender, receiver, private_key, value, gas, data) 
     data: encodedData,
     };
 
-    console.log("---> DebuG: B")
-
     // Sign the transaction
     web3.eth.accounts.signTransaction(txObject, privateKey)
     .then(signedTx => {
         // Send the transaction
-        console.log("---> DebuG: D")
         return web3.eth.sendSignedTransaction(signedTx.rawTransaction);
     })
     .then(receipt => {
-        console.log("---> DebuG: E")
         console.log('Transaction successful:', receipt.transactionHash);
     })
     .catch(error => {
-        console.log("---> DebuG: F")
         console.error('Transaction failed:', error);
     });
 }

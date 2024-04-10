@@ -1,7 +1,7 @@
 const { Web3 } = require('web3');
 require('dotenv').config();
 // const SendTransaction = require("./SepoliaControllers/SendTransaction")
-// const web3 = new Web3(process.env.INFURA_URL); // Example assumes a local Ethereum node running on default RPC port
+const web3 = new Web3(process.env.INFURA_URL); // Example assumes a local Ethereum node running on default RPC port
 // SendTransaction(web3, process.env.SENDER, process.env.RECEIVER, process.env.PRIVATE_KEY, 0.001, 10, {"uncle": "roger"})
 // const WriteJsonToIPFS = require('./IFPSControllers/WriteJson')
 // var ipfshash = ""
@@ -41,5 +41,8 @@ require('dotenv').config();
 
 // updateStuff()
 
-const CompileContract = require('./Helpers/CompileContract')
-CompileContract("Helloworld");
+// const CompileContract = require('./Helpers/CompileContract')
+// CompileContract("Helloworld");
+
+const DeployContract = require('./SepoliaControllers/DeployContract')
+DeployContract(web3, 'Helloworld')

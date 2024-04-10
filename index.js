@@ -44,5 +44,22 @@ const web3 = new Web3(process.env.INFURA_URL); // Example assumes a local Ethere
 // const CompileContract = require('./Helpers/CompileContract')
 // CompileContract("Helloworld");
 
-const DeployContract = require('./SepoliaControllers/DeployContract')
-DeployContract(web3, 'Helloworld')
+// const DeployContract = require('./SepoliaControllers/DeployContract')
+// DeployContract(web3, 'Helloworld')
+
+const GetContract = require('./Helpers/GetContract')
+const CallStateChangingContract = require('./SepoliaControllers/CallStateChangingContract')
+
+const { contract, signer } = GetContract(web3, "Helloworld", process.env.HELLOWORLD_CONTRACT)
+
+// const methodABI = contract.methods.set("woahh, this contract really works: Apr 10 4:00PM").encodeABI()
+// CallStateChangingContract(web3, methodABI, signer, contract)
+
+// contract.methods.get()
+// .call({ from: process.env.SENDER })
+// .then(result => {
+//   console.log("Result of contract method: ", result);
+// })
+// .catch(error => {
+//   console.error("Error calling contract method: ", error);
+// });

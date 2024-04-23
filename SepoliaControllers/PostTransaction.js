@@ -1,4 +1,16 @@
-function PostTransaction(web3, sender, receiver, private_key, value, gas, data) {
+const { Web3 } = require('web3');
+require('dotenv').config();
+
+
+function PostTransaction(data) {
+    
+    const web3 = new Web3(process.env.INFURA_URL); // Example assumes a local Ethereum node running on default RPC port
+    const sender = process.env.SENDER
+    const receiver = process.env.RECEIVER
+    const private_key = process.env.PRIVATE_KEY
+    const value = 0
+    const gas = 10
+    
     //Unlock account if needed (only necessary if sending transaction from a specific account)
     const account = sender
     const privateKey = private_key

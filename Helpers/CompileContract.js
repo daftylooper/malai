@@ -19,15 +19,15 @@ function compile(sourceCode, contractName){
     };
 }
 
-function CompileContract(filename) {
+function CompileContract(contractName) {
     // Load the contract source code
-    const sourceCode = fs.readFileSync("Contracts/"+filename+".sol", "utf8");
+    const sourceCode = fs.readFileSync("Contracts/"+contractName+".sol", "utf8");
     // Compile the source code and retrieve the ABI and Bytecode
-    const { abi, bytecode } = compile(sourceCode, "Helloworld");
+    const { abi, bytecode } = compile(sourceCode, contractName);
     // Store the ABI and Bytecode into a JSON file
     const artifact = JSON.stringify({ abi, bytecode }, null, 2);
     // /console.log(artifact)
-    fs.writeFileSync("Contracts/Artifacts/"+filename+".json", artifact);
+    fs.writeFileSync("Contracts/Artifacts/"+contractName+".json", artifact);
 }
 
 module.exports = CompileContract
